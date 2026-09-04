@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Surprise For You</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+    }
+
+    /* Start Button Style */
+    .surprise-btn {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .surprise-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(225, 29, 72, 0.6);
+    }
+
+    .surprise-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Popup Box Style */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 100;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .popup-card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 420px;
+      padding: 32px 24px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: scale(0.8);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .popup-overlay.active .popup-card {
+      transform: scale(1);
+    }
+
+    .popup-card h2 {
+      color: #1e293b;
+      font-size: 1.75rem;
+      margin-bottom: 12px;
+    }
+
+    .popup-card p {
+      color: #475569;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .close-btn {
+      background: #f1f5f9;
+      color: #334155;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #e2e8f0;
+    }
+
+    /* Heart Animation */
+    .heart {
+      position: absolute;
+      color: #f43f5e;
+      font-size: 24px;
+      user-select: none;
+      pointer-events: none;
+      animation: floatUp 3s linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="surprise-btn" id="openBtn">Click Here for a Surprise ✨</button>
+  </div>
+
+  <!-- Popup Box -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+      <h2>Hey Beautiful ❤️</h2>
+      <p>I just wanted to make a little secret page to remind you how much you mean to me. Thank you for being in my life and bringing so much warmth to my world.</p>
+      <button class="close-btn" id="closeBtn">Close with love</button>
+    </div>
+  </div>
+
+  <script>
+    const openBtn = document.getElementById('openBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const popupOverlay = document.getElementById('popupOverlay');
+
+    openBtn.addEventListener('click', () => {
+      popupOverlay.classList.add('active');
+      createHearts();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      popupOverlay.classList.remove('active');
+    });
+
+    // Create floating heart effect
+    function createHearts() {
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.classList.add('heart');
+          heart.innerHTML = '❤️';
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.bottom = '0px';
+          heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 4000);
+        }, i * 120);
+      }
+    }
+  </script>
+</body>
+</html>
